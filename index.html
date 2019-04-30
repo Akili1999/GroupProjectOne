@@ -1,20 +1,202 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>Spotify Group Project</title>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+  <title>Spotify Group Project</title>
 
-   
-  </head>
-  <body>
-      
-    <script src= "assets/javascript/face.js"></script>
-    <script src= "assets/javascript/spotify.js"></script>
-    <script src= "assets/javascript/page.js"></script>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  </body>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+</head>
+
+<body>
+  <nav>
+    <button class="homeBtn">Home</button>
+    <h3>Title of our App</h3>
+    <p>Hi, username</p>
+  </nav>
+  <!--this is from Tyler, from spotify stuffs-->
+  <div>
+    <div id="login">
+      <h2>First, log in to spotify</h2>
+      <a href="/login">Log in</a>
+    </div>
+    <div id="loggedin">
+    </div>
+  </div>
+
+  <div class="pictureFrame">
+    <div id="imgInput">Random Image will be here</div>
+    <button id="uploadBtn">Upload Photo</button>
+    <button id="captureBtn">Take Picture</button>
+  </div>
+  <div class="historyBody">
+    <button id="historyBtn">Previous PlayList</button>
+  </div>
+  <div class="pictureFrame">
+    <div id="imgInput">Random Image will be here</div>
+    <button id="uploadBtn">Upload Photo</button>
+    <button id="captureBtn">Take Picture</button>
+  </div>
+  <div class="historyBody">
+    <button id="historyBtn">Previous PlayList</button>
+  </div>
+
+  <button id="captureBtn">Capture</button>
+  <button id="keepBtn">Keep</button>
+  <button id="backBtn">Will allow user to take another picture</button>
+
+  <div class="imageInput anger #FF2D02">
+    <a href="https://www.facebook.com/">
+      <img src="assets/images/portfolioplaceholder1.jpg" alt="art pic">
+      <div id="spotifyPlayList">
+        <h3>Anger</h3>
+        <ul>
+          <li>song one</li>
+          <li>song two</li>
+          <li>song three</li>
+          <li>song four</li>
+          <li>song five</li>
+        </ul>
+      </div>
+  </div>
+
+  <div class="imageInput happy #10E80C">
+    <a href="https://www.facebook.com/">
+      <img src="assets/images/portfolioplaceholder2.jpg" alt="art pic">
+      <div id="spotifyPlayList">
+        <h3>Happy</h3>
+        <ul>
+          <li>song one</li>
+          <li>song two</li>
+          <li>song three</li>
+          <li>song four</li>
+          <li>song five</li>
+        </ul>
+      </div>
+  </div>
+
+  <div class="imageInput sad #00B2FF">
+    <a href="https://www.facebook.com/">
+      <img src="assets/images/portfolioplaceholder3.jpg" alt="art pic">
+      <div id="spotifyPlayList">
+        <h3>Sad</h3>
+        <ul>
+          <li>song one</li>
+          <li>song two</li>
+          <li>song three</li>
+          <li>song four</li>
+          <li>song five</li>
+        </ul>
+      </div>
+  </div>
+
+  <div class="imageInput neutral #931AF0">
+    <a href="https://www.facebook.com/">
+      <img src="assets/images/portfolioplaceholder4.jpg" alt="art pic">
+      <div id="spotifyPlayList">
+        <h3>Neutral</h3>
+        <ul>
+          <li>song one</li>
+          <li>song two</li>
+          <li>song three</li>
+          <li>song four</li>
+          <li>song five</li>
+        </ul>
+      </div>
+  </div>
+  <script type="text/javascript">
+    function processImage() {
+        // Replace <Subscription Key> with your valid subscription key.
+        var subscriptionKey = "<Subscription Key>";
+    
+        // NOTE: You must use the same region in your REST call as you used to
+        // obtain your subscription keys. For example, if you obtained your
+        // subscription keys from westus, replace "westcentralus" in the URL
+        // below with "westus".
+        //
+        // Free trial subscription keys are generated in the "westus" region.
+        // If you use a free trial subscription key, you shouldn't need to change 
+        // this region.
+        var uriBase =
+            "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect";
+    
+        // Request parameters.
+        var params = {
+            "returnFaceId": "true",
+            "returnFaceLandmarks": "false",
+            "returnFaceAttributes":
+                "age,gender,headPose,smile,facialHair,glasses,emotion," +
+                "hair,makeup,occlusion,accessories,blur,exposure,noise"
+        };
+    
+        // Display the image.
+        var sourceImageUrl = document.getElementById("inputImage").value;
+        document.querySelector("#sourceImage").src = sourceImageUrl;
+    
+        // Perform the REST API call.
+        $.ajax({
+            url: uriBase + "?" + $.param(params),
+    
+            // Request headers.
+            beforeSend: function(xhrObj){
+                xhrObj.setRequestHeader("Content-Type","application/json");
+                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+            },
+    
+            type: "POST",
+    
+            // Request body.
+            data: '{"url": ' + '"' + sourceImageUrl + '"}',
+        })
+    
+        .done(function(data) {
+            // Show formatted JSON on webpage.
+            $("#responseTextArea").val(JSON.stringify(data, null, 2));
+        })
+    
+        .fail(function(jqXHR, textStatus, errorThrown) {
+            // Display error message.
+            var errorString = (errorThrown === "") ?
+                "Error. " : errorThrown + " (" + jqXHR.status + "): ";
+            errorString += (jqXHR.responseText === "") ?
+                "" : (jQuery.parseJSON(jqXHR.responseText).message) ?
+                    jQuery.parseJSON(jqXHR.responseText).message :
+                        jQuery.parseJSON(jqXHR.responseText).error.message;
+            alert(errorString);
+        });
+    };
+</script>
+
+<h1>Detect Faces:</h1>
+Enter the URL to an image that includes a face or faces, then click
+the <strong>Analyze face</strong> button.<br><br>
+Image to analyze: <input type="text" name="inputImage" id="inputImage"
+    value="https://upload.wikimedia.org/wikipedia/commons/c/c3/RH_Louise_Lillian_Gish.jpg" />
+<button onclick="processImage()">Analyze face</button><br><br>
+<div id="wrapper" style="width:1020px; display:table;">
+    <div id="jsonOutput" style="width:600px; display:table-cell;">
+        Response:<br><br>
+        <textarea id="responseTextArea" class="UIInput"
+            style="width:580px; height:400px;"></textarea>
+    </div>
+    <div id="imageDiv" style="width:420px; display:table-cell;">
+        Source image:<br><br>
+        <img id="sourceImage" width="400" />
+    </div>
+</div>
+
+  <script src="assets/javascript/face.js"></script>
+  <script src="assets/javascript/spotify.js"></script>
+  <script src="assets/javascript/page.js"></script>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+</body>
+
 </html>
