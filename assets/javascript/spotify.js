@@ -11,11 +11,11 @@ $(document).ready(function () {
 		})
 	}
   
-  	app.init = function() {
+  	
 		$('form').on('submit', function(e) {
 			e.preventDefault();
 			authorize();
       		});
 	
-	}
+	
  });
