@@ -1,4 +1,5 @@
-var firebaseConfig = {
+//Initialize Firebase that will hold email/password data - this is directly from firebase
+var config = {
     apiKey: "AIzaSyC-RhLBykiCKR36KvA6374fK2F-AhEqGqQ",
     authDomain: "project-d83ed.firebaseapp.com",
     databaseURL: "https://project-d83ed.firebaseio.com",
@@ -6,29 +7,47 @@ var firebaseConfig = {
     storageBucket: "project-d83ed.appspot.com",
     messagingSenderId: "162056553843",
     appId: "1:162056553843:web:f514a50333cc4cea"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
+};
+// Initialize Firebase
+firebase.initializeApp(config);
 
-var email = "";
+//variable that is specifically for the firebase database
+var database = firebase.database();
+
+//variables for the items that I need
+var email = "",
     password = ""
 
-$("#submit-login").click(function(){
-    event.preventDefault();
+//getting the DOM loaded/rendered
+$(document).ready(function() {
+   initializeEventHandlers();
+});
 
-    email = $("#email-input").val().trim();
-    password = $("#password-input").val().trim()
+function initializeEventHandlers() {
 
-    if ($("#email-input").val().trim() === "" ||
-        $("#password-input").val().trim() === ""){
-            alert("Please provide an email and password.")
-        } else {}
-            database.ref().push({
-                email:email,
-                password:password
-        })
+    $("#submit-login").click(function(){
+        event.preventDefault();
 
-    $("#email-input").val("");
-    $("#password-input").val("");
+        var email = $("#email-input").val().trim();
+        var password = $("#password-input").val().trim()
 
+        if ($("#email-input").val().trim() === "" ||
+            $("#password-input").val().trim() === ""){
+                alert("Please provide an email and password.")
+            }else {}
+                database.ref().push({
+                    email:email,
+                    password:password
+            })
+
+        $("#email-input").val("");
+        $("#password-input").val("");
+
+    });
+
+};
+
+database.ref().on("child_added", function(childSnapshot){
+        console.log(childSnapshot.val().email);
+        console.log(childSnapshot.val().password);
 });
