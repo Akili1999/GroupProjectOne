@@ -42,6 +42,7 @@ function initializeEventHandlers() {
 
         $("#email-input").val("");
         $("#password-input").val("");
+        window.location.href="upload_page.html";
 
     });
 
