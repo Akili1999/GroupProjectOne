@@ -24,13 +24,15 @@ $(document).ready(function() {
 });
 
 function initializeEventHandlers() {
-
+    //click login button
     $("#submit-login").click(function(){
         event.preventDefault();
 
+        //assign variables to the email and password to pass into firebase
         var email = $("#email-input").val().trim();
         var password = $("#password-input").val().trim()
 
+        //if either of the boxes (email/password) is blank, will not continue
         if ($("#email-input").val().trim() === "" ||
             $("#password-input").val().trim() === ""){
                 alert("Please provide an email and password.")
@@ -42,12 +44,14 @@ function initializeEventHandlers() {
 
         $("#email-input").val("");
         $("#password-input").val("");
+        //redirect to the uploads_page once the submit-login button is selected
+        //THIS IS WHERE THE SPECIFIC PAGE WE ARE SWITCHING TO GOES (IN THE QUOTES)
         window.location.href="upload_page.html";
 
     });
 
 };
-
+//console.log to ensure that the email and password are captured
 database.ref().on("child_added", function(childSnapshot){
         console.log(childSnapshot.val().email);
         console.log(childSnapshot.val().password);
