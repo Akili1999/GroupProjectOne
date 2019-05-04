@@ -6,7 +6,22 @@
     margin: 5%;
     padding: 5%;
 }
-.box {
+
+.navbar {
+    color: white;
+    text-align: center;
+}
+
+p, h3 {
+    text-align: center;
+}
+
+.pictureFrame {
+    /* border: 2px solid black; */
+    margin-left: 25%;
+    margin-right: 25%;
+}
+/* .box {
     background: white;
     width: 200px;
     height: 200px;
@@ -22,7 +37,16 @@
     50% {background-color: #10E80C; left: 300px; top: 300px; border-radius: 50% 50% 0 0;}
     75% {background-color: #00B2FF; left: 0px; top: 300px; border-radius: 50% 50% 50% 0;}
     100% {background-color: #333; left: 0px; top: 0px; border-radius: 50% 50% 50% 50%;}
-}
+} */
 .image {
     width: 100%;
+    padding: 15%;
+}
+
+#imgInput {
+    width: 100%;
+}
+
+#uploadBtn {
+    z-index: 0;
 }
