@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>MusicModus</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.8.1/js/solid.js" integrity="sha384-IA6YnujJIO+z1m4NKyAGvZ9Wmxrd4Px8WFqhFcgRmwLaJaiwijYgApVpo1MV8p77" crossorigin="anonymous"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.8.1/js/fontawesome.js" integrity="sha384-EMmnH+Njn8umuoSMZ3Ae3bC9hDknHKOWL2e9WJD/cN6XLeAN7tr5ZQ0Hx5HDHtkS" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="output.css">
+    </head>
+    <body>
+        <nav>
+            <div class="w-1/3 p-2">
+                <button class="homeBtn"><svg class="fill-current text-white h-6 w-6" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg></button>
+            </div>
+            <div class="w-1/3 p-2">
+                <h3>MusicModus</h3>
+            </div>
+            <div class="w-1/3 p-2">
+                <p>Hi, username</p>
+            </div>
+        </nav>
+
+        <script>
+                function processImage() {
+    
+                    var subscriptionKey = "54f3e0d43e1042329079b7f39fd8019e";
+                    var uriBase = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect";
+                    
+    
+                    var params = {
+                        "returnFaceId": "true",
+                        "returnFaceLandmarks": "false",
+                        "returnFaceAttributes":
+                        "age,gender,headPose,smile,facialHair,glasses,emotion," +
+                        "hair,makeup,occlusion,accessories,blur,exposure,noise"
+                    };
+                    
+                    // Display the image.
+                    var sourceImageUrl = document.getElementById("inputImage").value;
+                    document.querySelector("#sourceImage").src = sourceImageUrl;
+                    
+                    // Perform the REST API call.
+                    $.ajax({
+                        url: uriBase + "?" + $.param(params),
+                    
+                        // Request headers.
+                        beforeSend: function(xhrObj){
+                            xhrObj.setRequestHeader("Content-Type","application/json");
+                            xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+                        },
+                    
+                        type: "POST",
+                        
+                        // Request body.
+                        data: '{"url": ' + '"' + sourceImageUrl + '"}',
+                    })
+                    
+                    .done(function(data) {
+                        // Show formatted JSON on webpage.
+                        $("#responseTextArea").val(JSON.stringify(data, null, 2));
+                    })
+                    
+                    .fail(function(jqXHR, textStatus, errorThrown) {
+                        // Display error message.
+                        var errorString = (errorThrown === "") ?
+                            "Error. " : errorThrown + " (" + jqXHR.status + "): ";
+                        errorString += (jqXHR.responseText === "") ?
+                            "" : (jQuery.parseJSON(jqXHR.responseText).message) ?
+                                jQuery.parseJSON(jqXHR.responseText).message :
+                                jQuery.parseJSON(jqXHR.responseText).error.message;
+                        alert(errorString);
+                    });
+                };
+                </script>
+                <h1>Detect Faces:</h1>
+                Enter the URL to an image that includes a face or faces, then click
+                the <strong>Analyze face</strong> button.<br><br>
+                <p id= "analyze">Image to analyze:</p> <input type="text" name="inputImage" id="inputImage"
+                        value="https://upload.wikimedia.org/wikipedia/commons/c/c3/RH_Louise_Lillian_Gish.jpg" />
+                <button class="btn btn-success" id= "trick" onclick="processImage()">Analyze face</button><br><br>
+                <div id="wrapper" style="width:1020px; display:table;">
+                        <div id="jsonOutput" style="width:600px; display:table-cell;">
+                                <br><br>
+                                <textarea id="responseTextArea" class="UIInput"
+                                        style="width:300px; height:300px;"></textarea>
+                        </div>
+                        <div id="imageDiv" style="width:200px; height: 200px; display:table-cell;">
+                                Your picture:<br><br>
+                                <img id="sourceImage" width="200px" height="300px"/>
+                        </div>
+                </div>
+    
+            <main class="main-container">
+                <section>
+                    <div class="form">
+                        <img src="images/note.svg" alt="">
+                        <form action="">
+                            <input type="search" value="">
+                            <input type="submit" value="Create">
+                        </form>
+                        <p>Icon created by unlimicon from the Noun Project</p>
+                    </div>
+                    <div class="playlist">
+                        <div class="loader">
+                            <div class="inner-circle"></div>
+                            <iframe id="player" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        
+        <footer>
+            <div>
+                <p>Copywrite Spotify</p>
+                <p>Copywrite Microsoft Face</p>
+            </div>
+            <div>
+                <p>Created by: Lio, Akili, Tyler & Cali</p>
+                <p>2019</p>
+            </div>
+        </footer>
+    </body>
+</html>

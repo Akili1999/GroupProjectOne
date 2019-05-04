@@ -1,0 +1,24 @@
+{
+  "name": "GroupProjectOne",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "tailwindcss": "^0.7.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Akili1999/GroupProjectOne.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Akili1999/GroupProjectOne/issues"
+  },
+  "homepage": "https://github.com/Akili1999/GroupProjectOne#readme"
+}
